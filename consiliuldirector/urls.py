@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from decizii.views import DeciziiListView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', DeciziiListView.as_view(), name="decizie_list")
 ]
