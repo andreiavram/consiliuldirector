@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}
+    Decizii
+{% endblock %}
+
+{% block content %}
+    <div class="list-group">
+        {% for decizie in object_list %}
+            <a href="{% url "decizie_detail" pk=decizie.id %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ decizie.titlu }}</h5>
+                    <small>{{ decizie.data_creata | timesince }}</small>
+                </div>
+                <p class="mb-1">{{ decizie.text }}</p>
+                <small>propusă de {{ decizie.initiator }}</small>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

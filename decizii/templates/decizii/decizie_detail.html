@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ object.titlu }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <a class="btn btn-primary" href="{% url "decizie_list" %}" role="button"><i class="fas fa-chevron-left"></i> Lista decizii</a>
+                <p class = "lead">{{ object.text }}</p>
+            </div>
+            <div class="col-sm-4">
+                <ul class="list-group">
+                    {% for vot in object.actiuni.all %}
+                        <li class="list-group-item">{{ vot.membru }} - {{ vot.get_vot_display }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

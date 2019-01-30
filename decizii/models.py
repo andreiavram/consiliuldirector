@@ -128,7 +128,7 @@ class ActiuneDecizie(models.Model):
     ]
 
     membru = models.ForeignKey(MembruConsiliulDirector, on_delete=models.CASCADE)
-    decizie = models.ForeignKey(Decizie, on_delete=models.CASCADE)
+    decizie = models.ForeignKey(Decizie, on_delete=models.CASCADE, related_name="actiuni")
 
     comentariu = models.TextField(null=True, blank=True)
     fisier = models.FileField(upload_to="uploads/documente/", null=True, blank=True)
