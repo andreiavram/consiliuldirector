@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from decizii.views import DeciziiListView, DecizieDetailView
 
@@ -22,4 +24,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', DeciziiListView.as_view(), name="decizie_list"),
     path('decizii/<int:pk>/', DecizieDetailView.as_view(), name="decizie_detail"),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

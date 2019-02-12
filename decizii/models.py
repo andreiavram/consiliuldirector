@@ -28,10 +28,7 @@ class MembruConsiliulDirector(models.Model):
         verbose_name_plural = "Membrii Consiliul Director"
 
     def __str__(self):
-        return "{} ({} - {})".format(self.membru,
-                                     self.consiliu_director.mandat_inceput,
-                                     self.consiliu_director.mandat_sfarsit)
-
+        return "{}".format(self.membru)
 
 class Registru(models.Model):
     nume = models.CharField(max_length=255)
@@ -114,6 +111,31 @@ class Decizie(models.Model):
         verbose_name_plural = "Decizii"
 
 
+class AttachementDecizie(models.Model):
+    TEXT_GDOC = 1
+    ANEXA = 2
+    DECIZIE_ORIGINAL = 3
+    SUPORT_DECIZIE = 4
+
+    ROLE = [
+        (TEXT_GDOC, "Google Document decizie"),
+        (ANEXA, "Anexă"),
+        (DECIZIE_ORIGINAL, "Scan document original"),
+        (SUPORT_DECIZIE, "Documente care susțin o decizie")
+    ]
+
+    decizie = models.ForeignKey(Decizie, on_delete=models.CASCADE)
+    attachement = models.FileField(upload_to="atasamente/", null=True, blank=True)
+    link = models.URLField(null=True, blank=True)
+    name = models.CharField(max_length=255)
+    role = models.CharField(max_length=255, choices=ROLE)
+
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "{} ({}) - {}".format(self.name, self.role, self.decizie)
+
+
 class ActiuneDecizie(models.Model):
     PENTRU = 1
     IMPOTRIVA = 2
@@ -135,6 +157,8 @@ class ActiuneDecizie(models.Model):
     fisier_link = models.URLField(null=True, blank=True)
     sursa = models.CharField(max_length=255, null=True, blank=True)
     vot = models.IntegerField(choices=VOT, null=True, blank=True)
+
+    moment = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         vot = "{} a votat {}".format(self.membru, self.get_vot_display())
