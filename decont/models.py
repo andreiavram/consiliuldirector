@@ -19,7 +19,7 @@ class Decont(models.Model):
     perioada_start = models.DateField()
     perioada_stop = models.DateField()
     data_decont = models.DateTimeField()
-    valuta = models.CharField(choices=VALUTE)
+    valuta = models.CharField(max_length=3, choices=VALUTE)
 
 
 class LinieAvans(models.Model):
